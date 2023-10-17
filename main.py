@@ -15,14 +15,6 @@ def CuckTailSort(listUser):
                 listUser[i], listUser[i + 1] = listUser[i + 1], listUser[i]
                 history.append(listUser.copy())
 
-    #     if (change == False):
-    #         break
-    #     change = False
-    #     end = end - 1
-    #     for i in range(end - 1, start - 1, -1):
-    #         if (listUser[i] > listUser[i + 1]):
-    #             listUser[i], listUser[i + 1] = listUser[i + 1], listUser[i]
-    #             change = True
         if (change == False):
             break
 
@@ -34,12 +26,9 @@ def CuckTailSort(listUser):
                 listUser[i], listUser[i + 1] = listUser[i + 1], listUser[i]
                 history.append(listUser.copy())
 
-    #     start = start + 1
+        start = start + 1
 
-    # return listUser
-    for i in range(len(listUser), 0, -1):
-        
-
+    return history
 
 if __name__ == "__main__":
     lista = [random.randint(1, 100) for _ in range(100)]
@@ -52,7 +41,6 @@ if __name__ == "__main__":
         colors = ['red' if j == len(step) - 2 or j == len(step) - 1 else 'lime' for j in range(len(step))]
         ax.bar(np.arange(len(step)), step, color=colors)
         ax.set_title(f'Step {i + 1}')
-        plt.pause(0.05)
-        ax.clear()
+        plt.pause(0.01)
 
     plt.show()
