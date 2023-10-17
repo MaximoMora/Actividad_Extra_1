@@ -1,22 +1,38 @@
 def CuckTailSort(listUser):
     lenList = len(listUser)
-    if lenList <= 1:
-        return listUser
-    sorted = False
-    while not sorted:
-        sorted = True
-        for i in range(lenList-2, 0, -2):
-            if listUser[i] > listUser[i+1]:
-                listUser[i], listUser[i+1] = listUser[i+1], listUser[i]
-                is_sorted = False
-        for i in range(lenList-1, 2, -2):
-            if listUser[i] < listUser[i-1]:
-                listUser[i], listUser[i-1] = listUser[i-1], listUser[i]
-                is_sorted = False
+    change = True
+    start = 0
+    end = lenList - 1
+
+    while change == True:
+
+        change = False
+
+        for i in range(start, end):
+            if (listUser[i] > listUser[i + 1]):
+                listUser[i], listUser[i + 1] = listUser[i + 1], listUser[i]
+                change = True
+
+        if (change == False):
+            break
+
+        change = False
+
+        end = end - 1
+
+        for i in range(end - 1, start - 1, -1):
+            if (listUser[i] > listUser[i + 1]):
+                listUser[i], listUser[i + 1] = listUser[i + 1], listUser[i]
+                change = True
+
+        start = start + 1
+
     return listUser
+
 
 if __name__ == "__main__":
     print("holla")
-    z = CuckTailSort([1,5,7,4,9])
+    lista = [1,5,7,4,9]
+    z = CuckTailSort(lista)
 
     print(z)
