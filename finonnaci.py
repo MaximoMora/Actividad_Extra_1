@@ -10,6 +10,11 @@ def get_min_index(arr):
         
     return min(fibm,len(arr) - 1)
 
+
+
+
+
+
 def fibonacci_search(arr, x):
     n = len(arr)
     min_index = get_min_index(arr)
