@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import random
+import math
 
 
 class Algorithms():
@@ -49,12 +50,40 @@ class Algorithms():
         return history
 
 
+
+    def JumpSearch(self):
+        
+    
+        n = len(self.listUser)
+        nMath = int(math.sqrt(n))
+        nSum = nMath
+        min = 0
+        max = nMath
+        
+        while int(self.listUser[nMath]) < self.target:
+            min = nMath
+            max += nSum
+        
+            nMath += nSum
+        
+        print(min)
+        print(max)
+        print("index",nMath)
+        print("numero a buscar",self.target)
+    
+        for i in range(min,max+1):
+            if int(self.listUser[i]) == self.target:
+            
+                print("encontrado")
+                print(f"el numero {self.target} esta en la posicion {i}")
+    
 def Welcome():
     print("""
           
 >Ingresar lista 1
 >Ingresar Numero a buscar 2
->buscar numero 3
+>ordenar lista
+>buscar numero
           """)
 if __name__ == "__main__":
     print(type("dasdada"))
@@ -95,6 +124,9 @@ if __name__ == "__main__":
         
         elif userInput == "3":
             userClass.CuckTailSort()
+            
+        elif userInput == "4":
+            userClass.JumpSearch()
         
             
     
