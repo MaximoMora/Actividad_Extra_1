@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import time
-import random
-import math
-
+import time, random, math
+from colorama import Fore, Style
 
 class Algorithms():
 
@@ -19,74 +17,106 @@ class Algorithms():
         
 
     def CuckTailSort(self):
-        
         lenList = len(self.listUser)
-        change = True
-        start = 0
-        end = lenList - 1
         history = [self.listUser.copy()]
 
-        for i in range(len(self.listUser), 0, -1):
+        def print_colored_list(lst, highlighted_index):
+            for i, num in enumerate(lst):
+                if i == highlighted_index:
+                    print(Fore.RED + str(num) + Style.RESET_ALL, end=" ")
+                else:
+                    print(str(num), end=" ")
+            print()
+
+        for _ in range(len(self.listUser) - 1):  # Modifica esta línea
+            change = False
+            start = 0
+            end = lenList - 1
+
             for i in range(start, end):
-                if (self.listUser[i] > self.listUser[i + 1]):
+                if self.listUser[i] > self.listUser[i + 1]:
                     self.listUser[i], self.listUser[i + 1] = self.listUser[i + 1], self.listUser[i]
                     history.append(self.listUser.copy())
+                    print_colored_list(self.listUser, i + 1)
+                    time.sleep(0.025)
+                    change = True
 
-            if (change == False):
+            if not change:
                 break
 
-            change = False
             end = end - 1
 
             for i in range(end - 1, start - 1, -1):
-                if (self.listUser[i] > self.listUser[i + 1]):
+                if self.listUser[i] > self.listUser[i + 1]:
                     self.listUser[i], self.listUser[i + 1] = self.listUser[i + 1], self.listUser[i]
                     history.append(self.listUser.copy())
+                    print_colored_list(self.listUser, i + 1)
+                    time.sleep(0.025)
 
-        start = start + 1
+            start = start + 1
 
-        
         print(f"Lista ordenada: {self.listUser}")
         return history
 
-
-
     def JumpSearch(self):
-        
-    
         n = len(self.listUser)
         nMath = int(math.sqrt(n))
         nSum = nMath
-        min = 0
-        max = nMath
-        
-        while int(self.listUser[nMath]) < self.target:
-            min = nMath
-            max += nSum
-        
+        min_idx = 0
+        max_idx = nMath
+
+        def print_colored_list(lst, target_idx, current_idx):
+            for i, num in enumerate(lst):
+                if i == target_idx:
+                    print(Fore.GREEN + str(num) + Style.RESET_ALL, end=" ")
+                elif i == current_idx:
+                    print(Fore.RED + str(num) + Style.RESET_ALL, end=" ")
+                else:
+                    print(str(num), end=" ")
+            print()
+
+        found = False
+        while nMath < n:
+            if int(self.listUser[nMath]) >= self.target:
+                print_colored_list(self.listUser, -1, nMath)
+                break
+            min_idx = nMath
+            max_idx += nSum
             nMath += nSum
-        
-        print(min)
-        print(max)
-        print("index",nMath)
-        print("numero a buscar",self.target)
-    
-        for i in range(min,max+1):
+            print(f"Salto: min_idx={min_idx}, max_idx={max_idx}, nMath={nMath}")
+            print_colored_list(self.listUser, -1, nMath)
+            time.sleep(0.2)
+
+        for i in range(min_idx, min(max_idx + 1, n)):
             if int(self.listUser[i]) == self.target:
-            
-                print("encontrado")
-                print(f"el numero {self.target} esta en la posicion {i}")
+                found = True
+                print_colored_list(self.listUser, i, -1)
+                print(f"Comparando con el número en la posición {i}")
+                print(f"El número {self.target} está en la posición {i}")
+                break
+            else:
+                print(f"Comparando con el número en la posición {i}")
+
+        if not found:
+            print("El número no se encontró en la lista.")
+
+
+
     
 def Welcome():
     print("""
-          
->Ingresar lista 1
->Ingresar Numero a buscar 2
->ordenar lista
->buscar numero
-          """)
+1.Ingresar Lista
+2.Ordenar lista
+3.Ingresar Numero a buscar
+4.Buscar!
+
+5.Ver Lista
+6.Usar lista predefinida
+
+""")
+
 if __name__ == "__main__":
-    print(type("dasdada"))
+
     userClass = Algorithms()
     listUser = []
     exit = False
@@ -94,42 +124,51 @@ if __name__ == "__main__":
     while not exit:
         Welcome()
 
-        userInput = input(">")
+        userInput = input("> ")
 
         if userInput == "salir":
             exit = True
         elif userInput == "1":
-            NumberExit = False
+            Exit = False
 
             print("Ingrese los numeros de la lista, para salir 'exit'")
-            while not NumberExit:
-                userNumber = input("numeros >")
-                if userNumber == "exit":
-                    NumberExit = False
-                    break
 
-                elif type(userNumber) == "str":
-                    print("ingresa un numero")
-                else:
-                    listUser.append(userNumber)
-                
+            while not Exit:
+                userNumber = input("> ")
+                try:
+                    try:
+                        listUser.append(int(userNumber))
+                    except:
+                        listUser.append(float(userNumber))
+                except:
+                    if userNumber == "exit" or userNumber == "Exit":
+                        Exit = False
+                        break
+
             userClass.setListUser(listUser)
-            
-            print("salio de escribir mas numeros en la lista")
-        
+
+            print(f"Lista actual de numeros: {listUser}")
+
+
         elif userInput == "2":
+            userClass.CuckTailSort()
+        
+        elif userInput == "3":
             print("Ingresa el numero a buscar")
             userNumber = int(input(">"))
             userClass.setTarget(userNumber)
-        
-        elif userInput == "3":
-            userClass.CuckTailSort()
             
         elif userInput == "4":
             userClass.JumpSearch()
-        
-            
-    
+
+        elif userInput == "5":
+            print(listUser)
+
+        elif userInput == "6":
+            list_length = int(input("Ingrese el largo de la lista: "))
+            listUser = [random.randint(1, 100) for _ in range(list_length)]
+            userClass.setListUser(listUser)
+
     
     
     
