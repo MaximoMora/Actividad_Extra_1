@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-import numpy as np
 import time, random, math
 from colorama import Fore, Style
 
@@ -11,12 +9,12 @@ class Algorithms():
 
     def setTarget(self, userTarget):
         self.target = userTarget
-        
+
     def setListUser(self, newlistUser):
         self.listUser = newlistUser
-        
 
-    def CuckTailSort(self):
+
+    def CockTailSort(self):
         lenList = len(self.listUser)
         history = [self.listUser.copy()]
 
@@ -28,7 +26,7 @@ class Algorithms():
                     print(str(num), end=" ")
             print()
 
-        for _ in range(len(self.listUser) - 1):  # Modifica esta línea
+        for _ in range(len(self.listUser) - 1):
             change = False
             start = 0
             end = lenList - 1
@@ -50,12 +48,12 @@ class Algorithms():
                 if self.listUser[i] > self.listUser[i + 1]:
                     self.listUser[i], self.listUser[i + 1] = self.listUser[i + 1], self.listUser[i]
                     history.append(self.listUser.copy())
-                    print_colored_list(self.listUser, i + 1)
+                    print_colored_list(self.listUser, i)
                     time.sleep(0.025)
 
             start = start + 1
 
-        print(f"Lista ordenada: {self.listUser}")
+        print(f"Lista ordenada:\n {self.listUser}")
         return history
 
     def JumpSearch(self):
@@ -102,18 +100,18 @@ class Algorithms():
 
 
 
-    
+
 def Welcome():
     print("""
-1.Ingresar Lista
-2.Ordenar lista
-3.Ingresar Numero a buscar
-4.Buscar!
+1. Ingresar Lista
+2. Ordenar lista
+3. Buscar!
 
-5.Ver Lista
-6.Usar lista predefinida
+4. Ver Lista
+5. Usar lista predefinida
 
 """)
+
 
 if __name__ == "__main__":
 
@@ -149,26 +147,28 @@ if __name__ == "__main__":
 
             print(f"Lista actual de numeros: {listUser}")
 
-
         elif userInput == "2":
-            userClass.CuckTailSort()
-        
+            userClass.CockTailSort()
+
         elif userInput == "3":
             print("Ingresa el numero a buscar")
             userNumber = int(input(">"))
             userClass.setTarget(userNumber)
-            
-        elif userInput == "4":
             userClass.JumpSearch()
 
-        elif userInput == "5":
+        elif userInput == "4":
             print(listUser)
 
-        elif userInput == "6":
-            list_length = int(input("Ingrese el largo de la lista: "))
-            listUser = [random.randint(1, 100) for _ in range(list_length)]
-            userClass.setListUser(listUser)
-
-    
-    
-    
+        elif userInput == "5":
+            Exit = False
+            while not Exit:
+                try:
+                    list_length = int(
+                        input("Ingrese el largo de la lista: "))
+                    listUser = [random.randint(1, 100) for _ in range(list_length)]
+                    userClass.setListUser(listUser)
+                    print(userClass.listUser)
+                    Exit = True
+                except:
+                    print("Ingrese un numero válido")
+                    break
