@@ -1,46 +1,91 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import time, random
+import time
+import random
 
-def CuckTailSort(listUser):
-    lenList = len(listUser)
-    change = True
-    start = 0
-    end = lenList - 1
-    history = [listUser.copy()]
 
-    for i in range(len(listUser), 0, -1):
-        for i in range(start, end):
-            if (listUser[i] > listUser[i + 1]):
-                listUser[i], listUser[i + 1] = listUser[i + 1], listUser[i]
-                history.append(listUser.copy())
+class Algorithms():
 
-        if (change == False):
-            break
+    def __init__(self):
+        self.listUser = []
+        self.target = None
 
-        change = False
-        end = end - 1
+    def setTarget(self, userTarget):
+        self.target = userTarget
+        
+    def setListUser(self, newlistUser):
+        self.listUser = newlistUser
+        
 
-        for i in range(end - 1, start - 1, -1):
-            if (listUser[i] > listUser[i + 1]):
-                listUser[i], listUser[i + 1] = listUser[i + 1], listUser[i]
-                history.append(listUser.copy())
+    def CuckTailSort(self):
+        
+        lenList = len(self.listUser)
+        change = True
+        start = 0
+        end = lenList - 1
+        history = [self.listUser.copy()]
+
+        for i in range(len(self.listUser), 0, -1):
+            for i in range(start, end):
+                if (self.listUser[i] > self.listUser[i + 1]):
+                    self.listUser[i], self.listUser[i + 1] = self.listUser[i + 1], self.listUser[i]
+                    history.append(self.listUser.copy())
+
+            if (change == False):
+                break
+
+            change = False
+            end = end - 1
+
+            for i in range(end - 1, start - 1, -1):
+                if (self.listUser[i] > self.listUser[i + 1]):
+                    self.listUser[i], self.listUser[i + 1] = self.listUser[i + 1], self.listUser[i]
+                    history.append(self.listUser.copy())
 
         start = start + 1
 
-    return history
+        
+        print(f"Lista ordenada: {self.listUser}")
+        return history
 
+
+def Welcome():
+    print("""
+          
+>Ingresar lista 1
+>Ingresar Numero a buscar 2
+>buscar numero 3
+          """)
 if __name__ == "__main__":
-    lista = [random.randint(1, 100) for _ in range(100)]
-    print("Original list:", lista)
-    history = CuckTailSort(lista)
-
-    fig, ax = plt.subplots()
-
-    for i, step in enumerate(history):
-        colors = ['red' if j == len(step) - 2 or j == len(step) - 1 else 'lime' for j in range(len(step))]
-        ax.bar(np.arange(len(step)), step, color=colors)
-        ax.set_title(f'Step {i + 1}')
-        plt.pause(0.01)
-
-    plt.show()
+    Welcome()
+    
+    userClass = Algorithms()
+    userInput = int(input(">"))
+    listUser = []
+    if userInput == 1:
+        exit = False
+        print("Ingrese los numeros de la lista")
+        while not exit:
+            userNumber = input(">")
+            if userNumber == "salir":
+                exit = True
+            elif type(userNumber) == "string":
+                print("ingresa un numero")
+            else:
+                listUser.append(userNumber)
+                
+        userClass.setListUser(listUser)
+        
+    elif userInput == 2:
+        print("Ingresa el numero a buscar")
+        userNumber = int(input(">"))
+        userClass.setTarget(userNumber)
+        
+    elif userInput == 3:
+        userClass.CuckTailSort()
+        
+            
+    
+    
+    
+    
