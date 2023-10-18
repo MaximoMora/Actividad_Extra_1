@@ -57,32 +57,44 @@ def Welcome():
 >buscar numero 3
           """)
 if __name__ == "__main__":
-    Welcome()
-    
+    print(type("dasdada"))
     userClass = Algorithms()
-    userInput = int(input(">"))
     listUser = []
-    if userInput == 1:
-        exit = False
-        print("Ingrese los numeros de la lista")
-        while not exit:
-            userNumber = input(">")
-            if userNumber == "salir":
-                exit = True
-            elif type(userNumber) == "string":
-                print("ingresa un numero")
-            else:
-                listUser.append(userNumber)
+    exit = False
+
+    while not exit:
+        Welcome()
+
+        userInput = input(">")
+
+        if userInput == "salir":
+            exit = True
+        elif userInput == "1":
+            NumberExit = False
+
+            print("Ingrese los numeros de la lista, para salir 'exit'")
+            while not NumberExit:
+                userNumber = input("numeros >")
+                if userNumber == "exit":
+                    NumberExit = False
+                    break
+
+                elif type(userNumber) == "str":
+                    print("ingresa un numero")
+                else:
+                    listUser.append(userNumber)
                 
-        userClass.setListUser(listUser)
+            userClass.setListUser(listUser)
+            
+            print("salio de escribir mas numeros en la lista")
         
-    elif userInput == 2:
-        print("Ingresa el numero a buscar")
-        userNumber = int(input(">"))
-        userClass.setTarget(userNumber)
+        elif userInput == "2":
+            print("Ingresa el numero a buscar")
+            userNumber = int(input(">"))
+            userClass.setTarget(userNumber)
         
-    elif userInput == 3:
-        userClass.CuckTailSort()
+        elif userInput == "3":
+            userClass.CuckTailSort()
         
             
     
